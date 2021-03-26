@@ -1,5 +1,5 @@
 {
-  "name": "@dashkite/module",
+  "name": "@dashkite/masonry-coffee",
   "version": "0.0.0",
   "description": "",
   "main": "build/src/index.js",
