@@ -3,21 +3,21 @@ import Coffee from "coffeescript"
 Presets =
 
   node: ({ source, input }) ->
-      Coffee.compile input,
-        bare: true
-        inlineMap: true
+    Coffee.compile input,
+      bare: true
+      inlineMap: true
+      filename: source?.path
+      transpile:
         filename: source?.path
-        transpile:
-          filename: source?.path
-          plugins: [
-            [ require "babel-plugin-add-import-extension", {} ]
+        presets: [
+          [
+            require "@babel/preset-env"
           ]
-          presets: [
-            [
-              require "@babel/preset-env"
-              targets: node: "current"
-            ]
-          ]
+        ]
+        plugins: [
+          [ require "babel-plugin-autocomplete-index", {} ]
+        ]
+        targets: node: "current"
 
   browser: ({ build, source, input }) ->
     do ({ mode } = build ) ->
@@ -28,18 +28,19 @@ Presets =
         filename: source?.path
         transpile:
           filename: source?.path
-          plugins: [
-            [require "babel-plugin-add-import-extension", {}]
+          presets: [
+            [ require "@babel/preset-env" ]
           ]
-          presets: [[
-            require "@babel/preset-env"
-            targets:
-              "last 2 chrome versions,
-                last 2 firefox versions,
-                last 2 safari versions,
-                last 2 ios_saf versions"
-            modules: false
-          ]]
+          plugins: [
+            [ require "babel-plugin-add-import-extension", {} ]
+            [ require "babel-plugin-autocomplete-index", {} ]
+          ]
+          targets:
+            "last 2 chrome versions,
+              last 2 firefox versions,
+              last 2 safari versions,
+              last 2 ios_saf versions"
+          modules: false
 
 coffee = ( context ) ->
   if ( preset = Presets[ context.build.preset ])?

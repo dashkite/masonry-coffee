@@ -2,12 +2,12 @@
   "name": "@dashkite/masonry-coffee",
   "version": "0.1.0",
   "description": "",
-  "main": "build/src/index.js",
-  "main:coffee": "src/index.coffee",
   "files": [
-    "build/src",
-    "src"
+    "build/src"
   ],
+  "exports": {
+    ".": "./build/src/index.js"
+  },
   "scripts": {
     "test": "genie test"
   },
@@ -28,11 +28,11 @@
     "@dashkite/amen": "^0.2.2",
     "@dashkite/amen-console": "^0.0.2",
     "@dashkite/assert": "^0.1.4",
-    "@dashkite/genie": "link:../genie",
-    "babel-plugin-add-import-extension": "^1.6.0",
-    "babel-plugin-autocomplete-index": "^0.2.0"
+    "@dashkite/genie": "link:../genie"
   },
   "dependencies": {
-    "coffeescript": "^2.7.0"
+    "coffeescript": "^2.7.0",
+    "babel-plugin-add-import-extension": "^1.6.0",
+    "babel-plugin-autocomplete-index": "^0.2.0"
   }
 }
