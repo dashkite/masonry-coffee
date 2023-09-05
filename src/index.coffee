@@ -47,4 +47,5 @@ coffee = ( context ) ->
   else
     throw new Error "masonry: unknown CoffeeScript preset #{ context.build.preset }"
 
+export default coffee
 export { coffee }
