@@ -31,8 +31,9 @@
     "@dashkite/genie": "link:../genie"
   },
   "dependencies": {
-    "coffeescript": "^2.7.0",
+    "@swc/core": "^1.3.82",
     "babel-plugin-add-import-extension": "^1.6.0",
-    "babel-plugin-autocomplete-index": "^0.2.0"
+    "babel-plugin-autocomplete-index": "^0.2.0",
+    "coffeescript": "^2.7.0"
   }
 }

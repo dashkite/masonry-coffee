@@ -10,12 +10,10 @@ Presets =
       transpile:
         filename: source?.path
         presets: [
-          [
-            require "@babel/preset-env"
-          ]
+          [ require "@babel/preset-env" ]
         ]
         plugins: [
-          [ require "babel-plugin-autocomplete-index", {} ]
+          [ require "babel-plugin-autocomplete-index" ]
         ]
         targets: node: "current"
 
@@ -29,18 +27,23 @@ Presets =
         transpile:
           filename: source?.path
           presets: [
-            [ require "@babel/preset-env" ]
+            [ 
+              require "@babel/preset-env",
+              { 
+                # WHY IS THIS NOT WORKING!
+                modules: false  
+              }
+            ]
           ]
           plugins: [
-            [ require "babel-plugin-add-import-extension", {} ]
-            [ require "babel-plugin-autocomplete-index", {} ]
+            [ require "babel-plugin-add-import-extension" ]
+            [ require "babel-plugin-autocomplete-index" ]
           ]
           targets:
-            "last 2 chrome versions,
+            browsers: "last 2 chrome versions,
               last 2 firefox versions,
               last 2 safari versions,
               last 2 ios_saf versions"
-          modules: false
 
 coffee = ( context ) ->
   if ( preset = Presets[ context.build.preset ])?
