@@ -9,7 +9,8 @@
     ".": "./build/src/index.js"
   },
   "scripts": {
-    "test": "genie test"
+    "build": "scripts/build",
+    "test": "scripts/test"
   },
   "repository": {
     "type": "git",
