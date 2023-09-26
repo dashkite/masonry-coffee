@@ -1,49 +1,49 @@
 import Coffee from "coffeescript"
+import * as swc from "@swc/core"
+
+current = ->
+  [ major ] = process.versions.node.split "."
+  major
 
 Presets =
 
   node: ({ source, input }) ->
-    Coffee.compile input,
+    js = Coffee.compile input,
       bare: true
       inlineMap: true
       filename: source?.path
-      transpile:
-        filename: source?.path
-        presets: [
-          [ require "@babel/preset-env" ]
-        ]
-        plugins: [
-          [ require "babel-plugin-autocomplete-index" ]
-        ]
-        targets: node: "current"
+    { code } = await swc.transform js,
+        filename: source?.path        
+        sourceMaps: "inline"
+        jsc:
+          parser:
+            syntax: "ecmascript"
+        module:
+          type: "commonjs"
+        env:
+          targets:
+            node: current()
+    code
 
   browser: ({ build, source, input }) ->
     do ({ mode } = build ) ->
       mode ?= "debug"
-      Coffee.compile input,
+      js = Coffee.compile input,
         bare: true
         inlineMap: mode == "debug"
         filename: source?.path
-        transpile:
-          filename: source?.path
-          presets: [
-            [ 
-              require "@babel/preset-env",
-              { 
-                # WHY IS THIS NOT WORKING!
-                modules: false  
-              }
-            ]
-          ]
-          plugins: [
-            [ require "babel-plugin-add-import-extension" ]
-            [ require "babel-plugin-autocomplete-index" ]
-          ]
-          targets:
-            browsers: "last 2 chrome versions,
-              last 2 firefox versions,
-              last 2 safari versions,
-              last 2 ios_saf versions"
+      { code } = await swc.transform js,
+        filename: source?.path
+        sourceMaps: if mode == "debug" then "inline" else false
+        jsc:
+          parser:
+            syntax: "ecmascript"
+        env:
+          targets: "last 2 chrome versions,
+            last 2 firefox versions,
+            last 2 safari versions,
+            last 2 ios_saf versions"
+      code
 
 coffee = ( context ) ->
   if ( preset = Presets[ context.build.preset ])?
