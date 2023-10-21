@@ -11,10 +11,11 @@ Presets =
     js = Coffee.compile input,
       bare: true
       inlineMap: true
-      filename: source?.path
+      filename: if source?
+        "#{ source.name }#{ source.extension }"
     { code } = await swc.transform js,
-        filename: source?.path        
-        sourceMaps: "inline"
+        inputSourceMap: true  
+        sourceMaps: "inline" 
         jsc:
           parser:
             syntax: "ecmascript"
@@ -34,6 +35,7 @@ Presets =
         filename: source?.path
       { code } = await swc.transform js,
         filename: source?.path
+        inputSourceMap: mode == "debug"
         sourceMaps: if mode == "debug" then "inline" else false
         jsc:
           parser:
