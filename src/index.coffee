@@ -7,12 +7,12 @@ current = ->
 
 Presets =
 
-  node: ({ source, input }) ->
+  node: ( context ) ->
+    { module, source, input } = context
     js = Coffee.compile input,
       bare: true
       inlineMap: true
-      filename: if source?
-        "#{ source.name }#{ source.extension }"
+      filename: "/#{ module.name }/#{ source.path }"
     { code } = await swc.transform js,
         inputSourceMap: true  
         sourceMaps: "inline" 
