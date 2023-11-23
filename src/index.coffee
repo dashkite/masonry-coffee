@@ -1,3 +1,5 @@
+import Path from "node:path"
+import FS from "node:fs/promises"
 import Coffee from "coffeescript"
 import * as swc from "@swc/core"
 
@@ -5,26 +7,35 @@ current = ->
   [ major ] = process.versions.node.split "."
   major
 
+loadModule = ->
+  do ({ path, pkg } = {}) ->
+    path = Path.resolve "./package.json"
+    pkg = await FS.readFile path, "utf8"
+    JSON.parse pkg
+
 Presets =
 
-  node: ( context ) ->
-    { module, source, input } = context
-    js = Coffee.compile input,
-      bare: true
-      inlineMap: true
-      filename: "/#{ module.name }/#{ source.path }"
-    { code } = await swc.transform js,
-        inputSourceMap: true  
-        sourceMaps: "inline" 
-        jsc:
-          parser:
-            syntax: "ecmascript"
-        module:
-          type: "commonjs"
-        env:
-          targets:
-            node: current()
-    code
+  node: do ({ module } = {}) ->
+    ( context ) ->
+      do ({ source, input, js, code } = {}) ->
+        { source, input } = context
+        module ?= await do loadModule 
+        js = Coffee.compile input,
+          bare: true
+          inlineMap: true
+          filename: "/#{ module.name }/#{ source.path }"
+        { code } = await swc.transform js,
+            inputSourceMap: true  
+            sourceMaps: "inline" 
+            jsc:
+              parser:
+                syntax: "ecmascript"
+            module:
+              type: "commonjs"
+            env:
+              targets:
+                node: current()
+        code
 
   browser: ({ build, source, input }) ->
     do ({ mode } = build ) ->
