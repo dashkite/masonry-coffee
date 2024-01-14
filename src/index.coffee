@@ -2,6 +2,36 @@ import Path from "node:path"
 import FS from "node:fs/promises"
 import Coffee from "coffeescript"
 import * as swc from "@swc/core"
+import { ESLint } from "eslint"
+import chalk from "chalk"
+
+linter = new ESLint
+  baseConfig:
+    env:
+      browser: true
+      node: true
+    parserOptions:
+      sourceType: "module"
+      ecmaVersion: "latest"
+    rules:
+      "no-unused-vars": "warn"
+      "no-unreachable": "warn"
+      "no-unsafe-finally": "warn"
+      "no-unsafe-optional-chaining": "warn"
+      "use-isnan": "warn"
+      "camelcase": "warn"
+      "complexity": "warn"
+      "max-depth": "warn"
+      "max-lines": "warn"
+      # mixins get turned into functions by CS transpiler
+      # "max-lines-per-function": "warn"
+      "max-params": "warn"
+      "max-statements": "warn"
+      "new-cap": "warn"
+      "no-magic-numbers": "warn"
+      "no-useless-catch": "warn"
+      "no-useless-call": "warn"
+      "no-useless-computed-key": "warn"
 
 current = ->
   [ major ] = process.versions.node.split "."
@@ -12,6 +42,22 @@ loadModule = ->
     path = Path.resolve "./package.json"
     pkg = await FS.readFile path, "utf8"
     JSON.parse pkg
+
+lint = do ({ warn, error, indent } = {}) ->
+  warn = 1
+  error = 2
+  indent = " ".repeat 2
+  newline = "\n"
+  ({ code, path }) ->
+    results = await linter.lintText code, filePath: path
+    for { messages } in results
+      if messages.length > 0
+        console.warn newline, chalk.bold path
+        for message in messages
+          if warn == message.severity
+            console.warn indent, chalk.yellow message.message
+          else if error = message.severity
+            console.error indent, chalk.red message.message
 
 Presets =
 
@@ -35,6 +81,7 @@ Presets =
             env:
               targets:
                 node: current()
+        await lint { code, path: source.path }
         code
 
   browser: ({ build, source, input }) ->
@@ -56,6 +103,7 @@ Presets =
             last 2 firefox versions,
             last 2 safari versions,
             last 2 ios_saf versions"
+      await lint { code, path: source.path }
       code
 
 coffee = ( context ) ->
