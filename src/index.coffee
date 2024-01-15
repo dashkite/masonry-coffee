@@ -14,21 +14,40 @@ linter = new ESLint
       sourceType: "module"
       ecmaVersion: "latest"
     rules:
-      "no-unused-vars": "warn"
+      "no-unused-vars": [
+        "warn"
+        argsIgnorePattern: "^_"
+      ]
       "no-unreachable": "warn"
       "no-unsafe-finally": "warn"
       "no-unsafe-optional-chaining": "warn"
       "use-isnan": "warn"
-      "camelcase": "warn"
+      "camelcase": [
+        "warn"
+        allow: [
+          "_interop_require_default"
+          "_interop_require_wildcard"
+          "_export_star"
+        ]
+      ]
       "complexity": "warn"
       "max-depth": "warn"
-      "max-lines": "warn"
+      # CS transpiler sometimes takes small functions
+      # and makes them large, plus linter misreports 
+      # their length ...
+      # "max-lines": "warn"
+      # "max-statements": "warn"
       # mixins get turned into functions by CS transpiler
       # "max-lines-per-function": "warn"
       "max-params": "warn"
-      "max-statements": "warn"
       "new-cap": "warn"
-      "no-magic-numbers": "warn"
+      # TODO unfortunately the CS transpiler makes
+      # it difficult for the linter to distinguish between
+      # the use an initilization of magic numbers
+      # "no-magic-numbers": [
+      #   "warn"
+      #   ignore: [ -2, -1, 0, 1, 2 ]
+      # ]
       "no-useless-catch": "warn"
       "no-useless-call": "warn"
       "no-useless-computed-key": "warn"
