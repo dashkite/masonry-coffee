@@ -37,15 +37,18 @@ Presets =
                 node: current()
         code
 
-  browser: ({ build, source, input }) ->
-    do ({ mode } = build ) ->
+  browser: do ({ module, mode, path } = {}) ->
+    ({ build, source, input }) ->
+      { mode } = build
+      if source?.path?
+        module ?= await do loadModule 
+        path = "/#{ module.name }/#{ source.path }"
       mode ?= "debug"
       js = Coffee.compile input,
         bare: true
         inlineMap: mode == "debug"
-        filename: source?.path
+        filename: path
       { code } = await swc.transform js,
-        filename: source?.path
         inputSourceMap: mode == "debug"
         sourceMaps: if mode == "debug" then "inline" else false
         jsc:
