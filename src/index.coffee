@@ -54,6 +54,8 @@ Presets =
         jsc:
           parser:
             syntax: "ecmascript"
+          experimental:
+            keepImportAssertions: true
         env:
           targets: "last 2 chrome versions,
             last 2 firefox versions,
