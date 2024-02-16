@@ -67,7 +67,8 @@ coffee = ( context ) ->
   if ( preset = Presets[ context.build.preset ])?
     ( preset context )
   else
-    throw new Error "masonry: unknown CoffeeScript preset #{ context.build.preset }"
+    throw new Error "masonry: unknown CoffeeScript preset
+      #{ context.build.preset }"
 
 export default coffee
 export { coffee }
