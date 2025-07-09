@@ -34,11 +34,8 @@ importers:
         specifier: ^0.8.4
         version: 0.8.4
       '@dashkite/genie-release':
-        specifier: link:../genie-release
-        version: link:../genie-release
-      '@dashkite/vista':
-        specifier: link:../vista
-        version: link:../vista
+        specifier: ^0.2.0
+        version: 0.2.0
       babel-plugin-add-import-extension:
         specifier: ^1.6.0
         version: 1.6.0(@babel/core@7.22.15)
@@ -604,6 +601,9 @@ packages:
   '@dashkite/assert@0.1.4':
     resolution: {integrity: sha512-OLOzI/lA+EwCh6znSexGAG1V4bkaT5gU04xl6ApEluv5jICnHhinZ707MObu+jhVVJ9uHDDlG85O+Afn1aTQoQ==}
 
+  '@dashkite/genie-release@0.2.0':
+    resolution: {integrity: sha512-ySaAzJw7FfpF+lIomBjQm1s8rcrCDl29h6p0Wyaa6Br/FdIFyDbc8CRJKS8BnxMqN5sEN3J/qE/t7QNk7mZMKw==}
+
   '@dashkite/genie@0.8.4':
     resolution: {integrity: sha512-f4c84JoTaIoEvSwwre9lOD4V1/AHMp9prIeiJrD4/hRWiGcO+HYqjzjK7mNA2kfq68K/I3y9F5QYhlaG8QpCYA==}
     engines: {node: '>=20.0.0'}
@@ -614,6 +614,9 @@ packages:
 
   '@dashkite/kaiko@0.3.3':
     resolution: {integrity: sha512-XnAvVr9y2MsDqMLr4A24vkLF7Iuq3E8RjHEEpqhe29P5NevVX9jXKcXUStNMp9MSJbjHd2pqUNiM5Vvdja9ggg==}
+
+  '@dashkite/zephyr@0.2.0':
+    resolution: {integrity: sha512-l3Fm9nyOIp1yBnv4IzGOKVgo1/UucU5WLvsqAfcP2jEVlE4AgpPkODssyloxTyC3N+bhcz1DXqC/7KokI1eVjA==}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -1004,6 +1007,11 @@ packages:
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
+
+  zx@8.6.1:
+    resolution: {integrity: sha512-ig4Gn2e3L9QaQq3OsyDyGKvXFiq7wYvLCPmFJgcneHsr5vTeJefe0SXtDE7qaur9ysv7giAc0CmEtQcS71UA5Q==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
 
 snapshots:
 
@@ -1736,6 +1744,11 @@ snapshots:
     dependencies:
       '@dashkite/joy': 0.3.16
 
+  '@dashkite/genie-release@0.2.0':
+    dependencies:
+      '@dashkite/zephyr': 0.2.0
+      zx: 8.6.1
+
   '@dashkite/genie@0.8.4':
     dependencies:
       '@dashkite/joy': 0.3.16
@@ -1754,6 +1767,11 @@ snapshots:
   '@dashkite/joy@0.3.16': {}
 
   '@dashkite/kaiko@0.3.3': {}
+
+  '@dashkite/zephyr@0.2.0':
+    dependencies:
+      '@dashkite/joy': 0.3.16
+      js-yaml: 4.1.0
 
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
@@ -2080,3 +2098,5 @@ snapshots:
       picocolors: 1.1.1
 
   yallist@3.1.1: {}
+
+  zx@8.6.1: {}
