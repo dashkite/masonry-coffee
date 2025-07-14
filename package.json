@@ -3,7 +3,9 @@
   "version": "0.9.0",
   "description": "",
   "files": [
-    "build/src"
+    "build/src",
+    "build/browser/src",
+    "build/node/src"
   ],
   "exports": {
     ".": "./build/src/index.js"
