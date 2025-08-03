@@ -16,10 +16,10 @@ importers:
         version: 2.7.0
     devDependencies:
       '@babel/core':
-        specifier: 7.22.15
+        specifier: ^7.22.15
         version: 7.22.15
       '@babel/preset-env':
-        specifier: 7.22.15
+        specifier: ^7.22.15
         version: 7.22.15(@babel/core@7.22.15)
       '@dashkite/amen':
         specifier: ^0.5.0
